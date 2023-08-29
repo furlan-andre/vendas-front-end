@@ -26,13 +26,41 @@ const VendaCreate = () => {
   }, [])
 
   const handlerAdicionarCarrinho = (e) => {    
+    const item = { 'Id': e.Id, 'Nome': e.Nome, 'qtd': 1, 'ValorDeVenda': e.ValorDeVenda};   
+
     carrinhoChange((chart) => {
-      return[...chart, e];
+      return[...chart, item];
     });
     
     const index = produto.findIndex(x => x.Id === e.Id);
     if(+index >= 0)
       produto.splice(+index, 1);
+  }
+
+  const handlerAumentarQuantidade = (e) => {   
+    const index = carrinho.findIndex(x => x.Id === e.Id);
+    console.log(e);
+    console.log(index);
+
+    if(+index >= 0){
+      const qtd = carrinho[index].qtd+1
+      carrinho[index].qtd = qtd;      
+    }
+
+    carrinhoChange(carrinho);
+  }
+
+  const handlerRemoverQuantidade = (e) => {   
+    const index = carrinho.findIndex(x => x.Id === e.Id);
+    console.log(e);
+    console.log(index);
+
+    if(+index >= 0){
+      const qtd = carrinho[index].qtd-1
+      carrinho[index].qtd = qtd;      
+    }
+
+    carrinhoChange(carrinho);
   }
 
   const handleSubmit = (e) => {
@@ -64,7 +92,7 @@ const VendaCreate = () => {
 
   const montarItens= ()=> {
     
-      const mapeado = carrinho.map(x => { return { 'produtoId': x.Id, 'quantidade': 1} });
+      const mapeado = carrinho.map(x => { return { 'produtoId': x.Id, 'quantidade': x.qtd} });
 
       return mapeado;
   } 
@@ -96,7 +124,8 @@ const VendaCreate = () => {
                           <th>Id</th>
                           <th>Nome</th>
                           <th>Quantidade</th>
-                          <th>Valor</th>                          
+                          <th>Valor</th>        
+                          <th>Ações</th>                  
                           </tr>
                       </thead>
                       <tbody>
@@ -106,8 +135,10 @@ const VendaCreate = () => {
                           <tr>
                               <td> {p.Id} </td>
                               <td> {p.Nome} </td>
-                              <td> {1} </td>
-                              <td> {p.ValorDeVenda} </td>                              
+                              <td> {p.qtd} </td>
+                              <td> {p.ValorDeVenda} </td>  
+                              <td> <button className="btn btn-danger" type="button" onClick={() => handlerRemoverQuantidade(p)}>Remover (1) </button> <button className="btn btn-primary" type="button" onClick={() => handlerAumentarQuantidade(p)}>Adicionar (1)</button>                          
+                            </td>                            
                           </tr>
                           )
                       }
