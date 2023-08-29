@@ -46,7 +46,7 @@ const Produto = () =>{
                         <td> {p.Descricao} </td>
                         <td> {p.Tipo} </td>
                         <td> {p.ValorDeVenda} </td>
-                        <td> <a className="btn btn-warning">Editar</a></td>
+                        <td> <Link to={`/produto/editar/${p.Id}`} className="btn btn-warning">Editar</Link></td>
                     </tr>
                     )
                 }

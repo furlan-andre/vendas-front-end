@@ -7,6 +7,7 @@ import Produto from './components/Produto';
 import Venda from './components/Venda';
 import './App.css'
 import ProdutoCreate from './components/ProdutoCreate';
+import ProdutoEdit from './components/ProdutoEdit';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
     <Routes>      
       <Route path='/produto' index element={<Produto/>}></Route>
       <Route path='/produto/novo' index element={<ProdutoCreate/>}></Route>
+      <Route path='/produto/editar/:id' index element={<ProdutoEdit/>}></Route>
       <Route path='/venda' index element={<Venda/>}></Route>
       {/* <Route path='/venda/novo' index element={<Venda/>}></Route> */}
     </Routes>
