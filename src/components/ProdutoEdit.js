@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const ProdutoEdit = () => {
   const {id} = useParams();
@@ -17,6 +17,7 @@ const ProdutoEdit = () => {
   const[configuracaoValor, configuracaoValorChange]=useState("");
   const[produtos, produtoChange]= useState([]);
   const[agrupamentoLista, agrupamentoChange]=useState([])
+  const navigate = useNavigate();
 
   useEffect(()=> {
     fetch('http://localhost:3001/Produto')
@@ -80,7 +81,35 @@ const ProdutoEdit = () => {
   
         console.log(produtos);
     }
-      
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        const {nome, descricao, tipo, valorDeVenda, linkParaDownload }= values;
+
+        const agrupamento = agrupamentoLista.map(x => x.Id);
+
+        const payload = { nome, descricao, tipo, valorDeVenda, linkParaDownload, caracteristicas, agrupamento};
+
+        fetch('http://localhost:3001/Produto/' + id, {
+          method: 'PATCH',
+          headers:{"content-type":"application/json"},
+          body: JSON.stringify(payload)
+        })       
+        .then((res) => {  
+            if(res.ok)            
+              alert('Produto salvo com sucesso!');                  
+            else
+              alert('Houve um erro ao salvar o produto!')
+        })        
+        .catch((err) => {
+           alert(err.message);
+        })
+        .finally(() => {          
+          navigate('/produto');          
+        });    
+  }
+
   return (
     <div>
        <div>
@@ -218,7 +247,7 @@ const ProdutoEdit = () => {
                       )
                     }                        
                     <div className="card-body">
-                      <button className="btn btn-success" type="submit" >Salvar</button>
+                      <button className="btn btn-success" type="submit" onClick={handleSubmit} >Salvar</button>
                     </div>
                 </div>
               </div>
