@@ -1,53 +1,55 @@
-import React from "react"
-import Table from 'react-bootstrap/Table';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-class Produto extends React.Component{ 
-    
-    constructor(props){
-        super(props);
+const Venda = () =>{
+    const [vendas, vendasChange]= useState(null);
 
-        this.state = {
-            vendas: []
-        }
-    }
-    
-    componentDidMount() {
-        fetch('http://localhost:3001/Venda')        
+    useEffect(()=> {
+        fetch('http://localhost:3001/Venda')
         .then((res) => res.json())
         .then(dados => {
-            this.setState({ vendas: dados});
+            vendasChange(dados);
         })
         .catch(() => {
           console.log('serviço não disponível');
-        });   
-    }
+        });
+    }, [])
 
-    render(){
-        return (
-            <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Descrição</th>                
-                <th>Valor</th> 
-                <th>Cliente</th>    
-                <th>Data</th>           
-              </tr>
-            </thead>
-            <tbody>     
+    return (
+        <div className="container">
+        <div className="card">
+            <div className="card-title">
+            <h2>Listagem de Vendas</h2>    
+            </div>
+            <div className="mb-3">
+                <Link to="/venda/novo" className="btn btn-primary">Adicionar</Link>
+
+            </div>            
+            <table className="table table-bordered">
+                <thead className="bg-dark text-white">
+                    <tr>                    
+                    <th>Descrição</th>
+                    <th>Valor</th>                    
+                    <th>Cliente</th>
+                    <th>Data</th>                    
+                    </tr>
+                </thead>
+                <tbody>
                 {
-                    this.state.vendas.map((venda) =>
-                    <tr>                
-                        <td> {venda.Descricao} </td>                        
-                        <td> {venda.valor_total} </td>
-                        <td> {venda.cliente?.nome} </td>
-                        <td> {venda.data_venda}  </td>
-                    </tr> 
+                    vendas &&
+                    vendas.map((v) =>
+                    <tr>
+                        <td> {v.descricao} </td>                        
+                        <td> {v.valor_total} </td>
+                        <td> {v.cliente.nome} </td>
+                        <td> {v.data_venda} </td>                        
+                    </tr>
                     )
                 }
-            </tbody>
-          </Table>
-        )
-    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    )
 }
-
-export default Produto;
+export default Venda;

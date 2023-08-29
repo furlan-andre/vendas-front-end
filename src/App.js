@@ -26,6 +26,7 @@ function App() {
       <Route path='/produto' index element={<Produto/>}></Route>
       <Route path='/produto/novo' index element={<ProdutoCreate/>}></Route>
       <Route path='/venda' index element={<Venda/>}></Route>
+      {/* <Route path='/venda/novo' index element={<Venda/>}></Route> */}
     </Routes>
     </BrowserRouter>
     </div>
