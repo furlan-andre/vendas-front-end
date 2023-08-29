@@ -26,7 +26,7 @@ const VendaCreate = () => {
   }, [])
 
   const handlerAdicionarCarrinho = (e) => {    
-    const item = { 'Id': e.Id, 'Nome': e.Nome, 'qtd': 1, 'ValorDeVenda': e.ValorDeVenda};   
+    const item = { 'Id': e.Id, 'Nome': e.Nome, 'Descricao': e.Descricao, 'qtd': 1, 'ValorDeVenda': e.ValorDeVenda};   
 
     carrinhoChange((chart) => {
       return[...chart, item];
@@ -37,30 +37,52 @@ const VendaCreate = () => {
       produto.splice(+index, 1);
   }
 
-  const handlerAumentarQuantidade = (e) => {   
+  const handlerAumentarQuantidade = (e) => { 
+    console.log('adicionadno', e);  
     const index = carrinho.findIndex(x => x.Id === e.Id);
-    console.log(e);
-    console.log(index);
 
     if(+index >= 0){
-      const qtd = carrinho[index].qtd+1
+      const qtd = carrinho[index].qtd + 1
       carrinho[index].qtd = qtd;      
     }
 
-    carrinhoChange(carrinho);
+    carrinhoChange((chart) => {
+      return[...chart];
+    });
+
+    console.log('adicionou', e);  
   }
 
-  const handlerRemoverQuantidade = (e) => {   
+  const handlerRemoverQuantidade = (e) => {  
+    console.log('removendo', e);  
     const index = carrinho.findIndex(x => x.Id === e.Id);
-    console.log(e);
-    console.log(index);
+    console.log('index', index);
 
     if(+index >= 0){
-      const qtd = carrinho[index].qtd-1
-      carrinho[index].qtd = qtd;      
+      if(+e.qtd <= 1){      
+        console.log('if');
+        carrinho.splice(index, 1)
+
+        produtoChange((prod) => {
+          return[...prod, e]
+        })           
+      }
+      else {
+        console.log('else');
+        const qtd = carrinho[index].qtd - 1
+        carrinho[index].qtd = qtd;      
+      }
     }
 
-    carrinhoChange(carrinho);
+    carrinhoChange((chart) => {
+      return[...chart];
+    });
+
+    produtoChange((prod) => {
+      return[...prod]
+    })      
+
+    console.log('removeu', e);  
   }
 
   const handleSubmit = (e) => {
