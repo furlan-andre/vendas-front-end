@@ -8,6 +8,7 @@ import Venda from './components/Venda';
 import './App.css'
 import ProdutoCreate from './components/ProdutoCreate';
 import ProdutoEdit from './components/ProdutoEdit';
+import VendaCreate from './components/VendaCreate';
 
 function App() {
   return (
@@ -28,7 +29,7 @@ function App() {
       <Route path='/produto/novo' index element={<ProdutoCreate/>}></Route>
       <Route path='/produto/editar/:id' index element={<ProdutoEdit/>}></Route>
       <Route path='/venda' index element={<Venda/>}></Route>
-      {/* <Route path='/venda/novo' index element={<Venda/>}></Route> */}
+      <Route path='/venda/novo' index element={<VendaCreate/>}></Route> 
     </Routes>
     </BrowserRouter>
     </div>
