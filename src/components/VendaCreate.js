@@ -84,9 +84,9 @@ const VendaCreate = () => {
                   <input value={descricao} onChange={e=>descricaoChange(e.target.value)} className="form-control" ></input>
                   <label>Nome do Cliente</label>
                   <input value={nomeCliente} onChange={e=>nomeClienteChange(e.target.value)} className="form-control" ></input>
-                  <label>Nome do Cliente</label>
+                  <label>CPF do Cliente</label>
                   <input value={cpfCliente} onChange={e=>cpfClienteChange(e.target.value)} className="form-control" ></input>
-                  <label>Nome do Cliente</label>
+                  <label>Email do Cliente</label>
                   <input value={emailCliente} onChange={e=>emailClienteChange(e.target.value)} className="form-control" ></input>   
                   
                   <h3>Carrinho</h3>
